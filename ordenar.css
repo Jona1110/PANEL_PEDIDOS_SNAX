@@ -1,0 +1,407 @@
+:root {
+    --bg-color: #121212; /* Fondo general oscuro */
+    --card-bg: #1e1e1e; /* Fondo de tarjetas oscuro */
+    --primary-orange: #f97316;
+    --primary-orange-hover: #ea580c;
+    --text-dark: #e0e0e0; /* Texto claro para contraste */
+    --text-muted: #9ca3af;
+    --border-color: #333333; /* Bordes más sutiles */
+    --danger-red: #ef4444;
+    --success-green: #10b981;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text-dark);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* --- HEADER --- */
+.pos-header {
+    background-color: var(--card-bg);
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    z-index: 10;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--primary-orange);
+}
+
+.logo-area h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+.header-info {
+    display: flex;
+    gap: 20px;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.user-badge {
+    background: #2d3748;
+    color: #e2e8f0;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+/* --- CONTENEDOR PRINCIPAL --- */
+.pos-container {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* --- ÁREA IZQUIERDA: CATÁLOGO --- */
+.catalog-area {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: var(--bg-color);
+}
+
+.section-title {
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    margin-bottom: 15px;
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.menu-section {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 20px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px;
+}
+
+.product-card {
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: #2a2a2a; /* Fondo ligeramente más claro que card-bg */
+}
+
+.product-card:hover {
+    border-color: #4b5563;
+    transform: translateY(-2px);
+}
+
+.product-card.selected {
+    border-color: var(--primary-orange);
+    background-color: #3f1d0b; /* Tono naranja muy oscuro */
+    box-shadow: 0 4px 6px rgba(249, 115, 22, 0.1);
+}
+
+.product-card h3 {
+    margin: 0 0 5px 0;
+    font-size: 1rem;
+    color: var(--text-dark);
+}
+
+.product-card p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.price-tag {
+    font-weight: bold;
+    color: var(--success-green) !important;
+    font-size: 1rem !important;
+}
+
+.special-item {
+    border: 2px dashed var(--primary-orange);
+}
+.special-item h3 {
+    color: var(--primary-orange);
+}
+
+/* --- TAMAÑOS --- */
+.sizes-grid {
+    grid-template-columns: 1fr 1fr;
+}
+
+.size-btn {
+    padding: 12px;
+    border: 2px solid var(--border-color);
+    background: #2a2a2a;
+    border-radius: 8px;
+    font-weight: bold;
+    color: var(--text-dark);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.size-btn.selected {
+    border-color: var(--primary-orange);
+    background: var(--primary-orange);
+    color: #fff;
+}
+
+/* --- SALSAS --- */
+.sauce-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.sauce-btn {
+    padding: 10px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    background: #2a2a2a;
+    transition: 0.2s;
+    color: var(--text-dark);
+}
+
+.sauce-btn.selected {
+    color: #fff;
+    border-color: transparent;
+}
+
+/* Colores de Salsas (Ajustados para tema oscuro si es necesario, pero mantenemos los vibrantes) */
+.btn-bbq.selected { background-color: #8b4513; }
+.btn-lemon.selected { background-color: #84cc16; } 
+.btn-buffalo.selected { background-color: #f97316; }
+.btn-mango.selected { background-color: #eab308; }
+.btn-atomic.selected { background-color: #ef4444; }
+
+.add-combo-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--primary-orange);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.add-combo-btn:disabled {
+    background-color: #374151; /* Gris oscuro para disabled */
+    color: #6b7280;
+    cursor: not-allowed;
+}
+
+.add-combo-btn:not(:disabled):hover {
+    background-color: var(--primary-orange-hover);
+}
+
+.divider {
+    border: 0;
+    height: 1px;
+    background: var(--border-color);
+    margin: 20px 0;
+}
+
+/* --- ÁREA DERECHA: TICKET --- */
+.ticket-area {
+    width: 350px;
+    background-color: var(--card-bg);
+    border-left: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+}
+
+.ticket-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+    background-color: #1a1a1a;
+}
+
+.ticket-header h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.customer-input-area {
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.customer-input-area label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 5px;
+}
+
+.customer-input-area input {
+    width: 100%;
+    padding: 10px;
+    background-color: #2a2a2a;
+    color: var(--text-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    outline: none;
+}
+.customer-input-area input:focus {
+    border-color: var(--primary-orange);
+}
+
+.ticket-items {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px 20px;
+}
+
+.empty-cart-msg {
+    text-align: center;
+    color: #6b7280;
+    margin-top: 50px;
+}
+.empty-cart-msg i {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.item-details {
+    flex: 1;
+    padding-right: 10px;
+}
+
+.item-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin: 0 0 4px 0;
+    color: var(--text-dark);
+}
+
+.item-subtitle {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.item-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.item-price {
+    font-weight: bold;
+    color: var(--text-dark);
+}
+
+.btn-remove {
+    background: none;
+    border: none;
+    color: var(--danger-red);
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 0;
+}
+
+.ticket-footer {
+    padding: 20px;
+    background-color: #1a1a1a;
+    border-top: 1px solid var(--border-color);
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.total-amount {
+    color: var(--success-green);
+    font-size: 1.5rem;
+}
+
+.btn-charge {
+    width: 100%;
+    padding: 16px;
+    background-color: var(--success-green);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-charge:disabled {
+    background-color: #374151;
+    color: #6b7280;
+    cursor: not-allowed;
+}
+
+.btn-charge:not(:disabled):hover {
+    background-color: #059669;
+}
+
+/* Responsividad para Tablets/Móviles */
+@media (max-width: 900px) {
+    .pos-container {
+        flex-direction: column;
+    }
+    .ticket-area {
+        width: 100%;
+        height: 50vh;
+        border-left: none;
+        border-top: 2px solid var(--border-color);
+    }
+    .catalog-area {
+        padding-bottom: 20px;
+    }
+}
