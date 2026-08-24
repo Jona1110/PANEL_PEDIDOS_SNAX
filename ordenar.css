@@ -183,7 +183,6 @@ body {
 .btn-buffalo.selected { background-color: #f97316; }
 .btn-mango.selected { background-color: #eab308; }
 .btn-atomic.selected { background-color: #ef4444; }
-.btn-natural.selected { background-color: #ffffff; color: #000; }
 
 .add-combo-btn {
     width: 100%;
@@ -365,38 +364,29 @@ body {
 
 /* === OPTIMIZACIÓN MÓVIL === */
 @media (max-width: 900px) {
-    /* Permitimos que todo el cuerpo sea scrolleable */
     body {
         height: auto;
         overflow-y: auto;
     }
-
     .pos-container {
         flex-direction: column;
         overflow: visible;
     }
-
-    /* El catálogo toma su espacio natural sin scroll interno */
     .catalog-area {
         overflow-y: visible;
         padding: 15px;
     }
-
-    /* El ticket pasa abajo y toma toda el área */
     .ticket-area {
         width: 100%;
         border-left: none;
         border-top: 2px solid var(--primary-orange);
         height: auto;
     }
-
-    /* Ajustes finos de UI para pantallas pequeñas */
     .header-info span#current-date {
-        display: none; /* Ocultamos la fecha para ganar espacio en el header */
+        display: none;
     }
-
     .ticket-items {
-        min-height: 200px; /* Asegura un espacio visual para el carrito */
+        min-height: 200px; 
         overflow-y: visible;
     }
 }
