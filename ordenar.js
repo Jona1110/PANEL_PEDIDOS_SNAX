@@ -72,12 +72,12 @@ function initEvents() {
     const addComboBtn = document.getElementById('add-combo-btn');
     if (addComboBtn) {
         addComboBtn.addEventListener('click', () => {
-            finalCart.push({
-                title: `${currentCombo.protein} (${currentCombo.size})`,
-                subtitle: `Baño: ${currentCombo.sauce}`,
-                desc: `${currentCombo.protein} (${currentCombo.size}) [Salsa: ${currentCombo.sauce}]`,
-                price: currentCombo.price
-            });
+           finalCart.push({
+    title: `${currentCombo.protein} (${currentCombo.size})`,
+    subtitle: currentCombo.sauce === 'Naturales' ? 'Sin Salsa - Naturales' : `Baño: ${currentCombo.sauce}`,
+    desc: `${currentCombo.protein} (${currentCombo.size}) [${currentCombo.sauce === 'Naturales' ? 'Sin Salsa - Naturales' : 'Salsa: ' + currentCombo.sauce}]`,
+    price: currentCombo.price
+});
 
             // Resetear configuración visual
             currentCombo = { protein: null, sauce: null, price: 0, size: "Chica", basePrice: 0 };
