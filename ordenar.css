@@ -177,11 +177,13 @@ body {
     border-color: transparent;
 }
 
+.btn-natural.selected { background-color: #ffffff; color: #000; }
 .btn-bbq.selected { background-color: #8b4513; }
 .btn-lemon.selected { background-color: #84cc16; } 
 .btn-buffalo.selected { background-color: #f97316; }
 .btn-mango.selected { background-color: #eab308; }
 .btn-atomic.selected { background-color: #ef4444; }
+.btn-natural.selected { background-color: #ffffff; color: #000; }
 
 .add-combo-btn {
     width: 100%;
