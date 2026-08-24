@@ -4,7 +4,7 @@
 
 let currentCombo = { 
     protein: null, 
-    sauce: null, 
+    sauces: [], // Modificado para aceptar múltiples salsas
     price: 0, 
     size: "Chica", 
     basePrice: 0 
@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initEvents();
     updateInterface();
     
-    // Poner fecha actual en el header
     const dateElement = document.getElementById('current-date');
     if(dateElement){
         const today = new Date();
@@ -57,13 +56,27 @@ function initEvents() {
         });
     });
 
-    // 3. Manejo de Salsas
+    // 3. Manejo de Salsas (Máximo 2)
     document.querySelectorAll('.sauce-btn').forEach(el => {
         el.addEventListener('click', function() {
-            document.querySelectorAll('.sauce-btn').forEach(i => i.classList.remove('selected'));
-            this.classList.add('selected');
+            const sauceName = this.dataset.name;
             
-            currentCombo.sauce = this.dataset.name;
+            if (currentCombo.sauces.includes(sauceName)) {
+                // Si ya está seleccionada, la quitamos
+                currentCombo.sauces = currentCombo.sauces.filter(s => s !== sauceName);
+                this.classList.remove('selected');
+            } else {
+                // Si no está seleccionada, la agregamos (max 2)
+                if (currentCombo.sauces.length >= 2) {
+                    // Quitamos la más vieja
+                    const removedSauce = currentCombo.sauces.shift();
+                    document.querySelectorAll('.sauce-btn').forEach(btn => {
+                        if(btn.dataset.name === removedSauce) btn.classList.remove('selected');
+                    });
+                }
+                currentCombo.sauces.push(sauceName);
+                this.classList.add('selected');
+            }
             checkComboStatus();
         });
     });
@@ -72,15 +85,24 @@ function initEvents() {
     const addComboBtn = document.getElementById('add-combo-btn');
     if (addComboBtn) {
         addComboBtn.addEventListener('click', () => {
-           finalCart.push({
-    title: `${currentCombo.protein} (${currentCombo.size})`,
-    subtitle: currentCombo.sauce === 'Naturales' ? 'Sin Salsa - Naturales' : `Baño: ${currentCombo.sauce}`,
-    desc: `${currentCombo.protein} (${currentCombo.size}) [${currentCombo.sauce === 'Naturales' ? 'Sin Salsa - Naturales' : 'Salsa: ' + currentCombo.sauce}]`,
-    price: currentCombo.price
-});
+            
+            let salsaText = currentCombo.sauces.length === 2 ? 
+                `Mitad y Mitad: ${currentCombo.sauces[0]} / ${currentCombo.sauces[1]}` : 
+                (currentCombo.sauces[0] === 'Naturales' ? 'Sin Salsa - Naturales' : 'Salsa: ' + currentCombo.sauces[0]);
+                
+            let subtitleText = currentCombo.sauces.length === 2 ?
+                `Mitad: ${currentCombo.sauces[0]} / ${currentCombo.sauces[1]}` :
+                (currentCombo.sauces[0] === 'Naturales' ? 'Sin Salsa - Naturales' : `Baño: ${currentCombo.sauces[0]}`);
+
+            finalCart.push({
+                title: `${currentCombo.protein} (${currentCombo.size})`,
+                subtitle: subtitleText,
+                desc: `${currentCombo.protein} (${currentCombo.size}) [${salsaText}]`,
+                price: currentCombo.price
+            });
 
             // Resetear configuración visual
-            currentCombo = { protein: null, sauce: null, price: 0, size: "Chica", basePrice: 0 };
+            currentCombo = { protein: null, sauces: [], price: 0, size: "Chica", basePrice: 0 };
             document.querySelectorAll('.select-protein, .sauce-btn').forEach(i => i.classList.remove('selected'));
             document.querySelectorAll('.size-btn').forEach(i => i.classList.remove('selected'));
             
@@ -105,9 +127,8 @@ function initEvents() {
                 price: precioExtra
             });
             
-            // Efecto de feedback visual rápido
             const originalBg = this.style.backgroundColor;
-            this.style.backgroundColor = '#dcfce7'; // Verde claro
+            this.style.backgroundColor = '#dcfce7'; 
             setTimeout(() => {
                 this.style.backgroundColor = originalBg || '#fff';
             }, 300);
@@ -126,7 +147,7 @@ function initEvents() {
 function checkComboStatus() {
     const btnAdd = document.getElementById('add-combo-btn');
     if (btnAdd) {
-        btnAdd.disabled = !(currentCombo.protein && currentCombo.sauce);
+        btnAdd.disabled = !(currentCombo.protein && currentCombo.sauces.length > 0);
     }
 }
 
@@ -181,7 +202,6 @@ async function sendOrder() {
     btnFinalize.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> PROCESANDO...';
 
     const orderID = "SNX-" + Math.floor(Math.random() * 9000 + 1000);
-    // Usamos item.desc para mantener la estructura de texto que requiere Sheets y WhatsApp
     let detallesString = finalCart.map(item => `• ${item.desc}`).join("\n");
     let totalAcumulado = finalCart.reduce((acc, item) => acc + item.price, 0);
 
@@ -193,7 +213,6 @@ async function sendOrder() {
         cliente: nombreCliente
     };
 
-    // SUSTITUYE ESTE ENLACE POR LA URL DE TU NUEVA IMPLEMENTACIÓN DE APPS SCRIPT
     const scriptURL = 'https://script.google.com/macros/s/AKfycbzKHLXqqbt-z2i1B-7sDF4njCIJyRjN5-fcDJPTYiAe2NE6tW6BOHHuYlccmUcssfGR/exec';
 
     try {
